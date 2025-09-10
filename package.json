@@ -1,0 +1,64 @@
+{
+  "name": "react-signature-pad",
+  "version": "1.0.0",
+  "description": "A highly customizable signature component for React and Next.js applications",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./dist/*": "./dist/*"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "prepare": "npm run build",
+    "test": "jest",
+    "example:react": "cd examples/react-example && npm start",
+    "example:next": "cd examples/nextjs-example && npm run dev"
+  },
+  "keywords": [
+    "react",
+    "nextjs",
+    "signature",
+    "canvas",
+    "drawing",
+    "typescript"
+  ],
+  "author": "MwendaB <brianmwenda255@gmail.com> (https://github.com/MwendaB)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MwendaB/react-signature-pad"
+  },
+  "bugs": {
+    "url": "https://github.com/MwendaB/react-signature-pad/issues"
+  },
+  "homepage": "https://github.com/MwendaB/react-signature-pad#readme",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^10.0.0",
+    "@types/react": "^18.3.24",
+    "@types/react-dom": "^18.3.7",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "rollup": "^3.0.0",
+    "rollup-plugin-dts": "^5.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "tslib": "^2.4.0",
+    "typescript": "^4.9.0"
+  },
+  "files": [
+    "dist"
+  ]
+}

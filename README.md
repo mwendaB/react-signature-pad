@@ -52,7 +52,7 @@ export default function App() {
 |-------------------|------------|---------------------------------------------|
 | `penColor`        | string     | Color of the pen                            |
 | `backgroundColor` | string     | Background color of the pad                 |
-| `onEnd`           | function   | Callback when drawing ends                  |
+| `onEnd`           | function   | Callback when drawing ends                  | 
 | `onClear`         | function   | Callback when pad is cleared                |
 | `disabled`        | boolean    | Disable drawing                            |
 | `exportType`      | string     | 'png', 'jpeg', or 'svg'                    |

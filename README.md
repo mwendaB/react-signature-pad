@@ -15,6 +15,8 @@ A highly customizable signature component for React and Next.js applications.
 - Touch and mobile device support
 - Signature validation
 - Customizable UI
+- Optional Tailwind utility theming
+- Built-in dark mode toggle (opt-in)
 
 ## Installation
 
@@ -27,7 +29,7 @@ yarn add react-signature-pad
 pnpm add react-signature-pad
 ```
 
-## Usage
+## Quick Usage
 
 ```tsx
 import React from 'react';
@@ -46,7 +48,7 @@ export default function App() {
 }
 ```
 
-## API Reference
+## API Reference (Selected)
 
 | Prop              | Type       | Description                                 |
 |-------------------|------------|---------------------------------------------|
@@ -56,6 +58,8 @@ export default function App() {
 | `onClear`         | function   | Callback when pad is cleared                |
 | `disabled`        | boolean    | Disable drawing                            |
 | `exportType`      | string     | 'png', 'jpeg', or 'svg'                    |
+| `theme`           | 'default' \| 'tailwind' | Switches wrapper styling mode |
+| `showDarkModeToggle` | boolean | Shows a small dark mode toggle button |
 
 See [src/components/SignaturePad.tsx](src/components/SignaturePad.tsx) for full prop list.
 
@@ -67,6 +71,23 @@ You can export the signature as PNG, JPEG, or SVG:
 const dataUrl = signaturePadRef.current?.toDataURL('image/png');
 ```
 
+## Tailwind Integration
+
+You can opt into Tailwind-based styling by passing `theme="tailwind"` and ensuring Tailwind is configured in your app.
+
+```tsx
+<SignaturePad theme="tailwind" showDarkModeToggle />
+```
+
+This adds utility classes for spacing, rounded borders, light/dark surfaces, and transitions while keeping default CSS as a fallback.
+
+### Dark Mode
+If `showDarkModeToggle` is true a button toggles `html.dark`. You can also control dark mode externally—Tailwind will pick up class changes automatically.
+
+### Custom Theming
+- Extend by wrapping the component and applying your own classes via `className`.
+- Use your Tailwind config to customize color scales.
+
 ## Customization
 
 - Change pen color, thickness, background
@@ -75,8 +96,10 @@ const dataUrl = signaturePadRef.current?.toDataURL('image/png');
 
 ## Examples & Demo
 
-- [React Example](./examples/react-example/src/App.tsx)
-- [Next.js Example](./examples/nextjs-example/pages/index.tsx)
+See full guide in [EXAMPLES.md](./EXAMPLES.md)
+
+- React (Vite) playground: `examples/react-example`
+- Next.js integration: `examples/nextjs-example`
 
 ## Contributing
 

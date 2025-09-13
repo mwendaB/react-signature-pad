@@ -14,7 +14,8 @@
     "./dist/*": "./dist/*"
   },
   "scripts": {
-    "build": "rollup -c",
+  "build": "npm run build:css && rollup -c",
+  "build:css": "tailwindcss -i ./src/styles/tailwind.css -o ./dist/tailwind.css --minify",
     "dev": "rollup -c -w",
     "prepare": "npm run build",
     "test": "jest",
@@ -56,9 +57,12 @@
     "rollup-plugin-dts": "^5.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "tslib": "^2.4.0",
-    "typescript": "^4.9.0"
+  "typescript": "^4.9.0",
+  "tailwindcss": "^3.4.10",
+  "postcss": "^8.4.47",
+  "autoprefixer": "^10.4.20"
   },
   "files": [
-    "dist"
+  "dist"
   ]
 }

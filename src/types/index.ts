@@ -36,6 +36,10 @@ export interface SignaturePadProps {
   clearText?: string;
   maxWidth?: number;
   maxHeight?: number;
+  /** Visual theme integration. "default" uses library CSS; "tailwind" adds utility classes if consumer has Tailwind configured. */
+  theme?: 'default' | 'tailwind';
+  /** Show built-in dark mode toggle (works with both themes). */
+  showDarkModeToggle?: boolean;
 }
 
 export interface UseSignatureResult {

@@ -5,6 +5,4 @@ export * from './types';
 export * from './utils/exportUtils';
 export * from './utils/validationUtils';
 
-// Add default export
-import SignaturePad from './components/SignaturePad';
-export default SignaturePad;
+// No default export to encourage named imports and avoid mixed export warnings.

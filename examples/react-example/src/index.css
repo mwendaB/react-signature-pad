@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-50 text-gray-800 antialiased;
+}
+
+.button {
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors border border-gray-300 bg-white hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+.button-primary {
+  @apply bg-brand-600 text-white border-brand-600 hover:bg-brand-700;
+}
+.button-danger {
+  @apply bg-red-600 text-white border-red-600 hover:bg-red-700;
+}
+.panel {
+  @apply rounded-xl border border-gray-200 shadow-sm bg-white p-4;
+}
+.heading {
+  @apply text-lg font-semibold text-gray-900;
+}
+.subtle {
+  @apply text-sm text-gray-500;
+}
+.signature-wrapper {
+  @apply mt-4 space-y-4;
+}
+.signature-shell {
+  @apply relative rounded-lg border border-gray-300 bg-white shadow-inner overflow-hidden;
+}
+.signature-placeholder-tailwind {
+  @apply absolute inset-0 flex items-center justify-center text-gray-400 italic pointer-events-none select-none;
+}
+.toggle-dark {
+  @apply fixed top-4 right-4;
+}

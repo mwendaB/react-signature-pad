@@ -8,6 +8,14 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
 }
 
+/* Dark mode (opt-in via html.dark class toggled by component) */
+html.dark .react-signature-pad {
+  background: #111827;
+  border-color: #374151;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  color: #e5e7eb;
+}
+
 .signature-canvas-container {
   position: relative;
   margin: 16px 0;
@@ -15,6 +23,10 @@
   border-radius: 4px;
   overflow: hidden;
   background: white;
+}
+html.dark .signature-canvas-container {
+  background: #1f2937;
+  border-color: #374151;
 }
 
 .signature-canvas {
@@ -34,6 +46,7 @@
   pointer-events: none;
   font-size: 16px;
 }
+html.dark .signature-placeholder { color: #6b7280; }
 
 .customize-toggle {
   background: #f0f0f0;

@@ -16,19 +16,23 @@ const AdvancedExample: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: '2rem auto' }}>
-      <h2>Advanced Signature Pad Example</h2>
+    <div className="panel space-y-4">
+      <div>
+        <h2 className="heading">Advanced Signature Pad</h2>
+        <p className="subtle">Includes controls, customization panel, and actions.</p>
+      </div>
       <SignaturePad
         ref={signaturePadRef}
-        penColor="#007bff"
-        backgroundColor="#f8f9fa"
-        onEnd={signature => console.log('Signature data URL:', signature)}
+        penColor="#0ea5e9"
+        backgroundColor="#f8fafc"
+        onEnd={(signature: string) => console.log('Signature data URL:', signature)}
         showControls={true}
         showCustomization={true}
+        className="shadow border border-gray-200 rounded-md"
       />
-      <div style={{ marginTop: '1rem' }}>
-        <button onClick={handleSave}>Save Signature</button>
-        <button onClick={handleClear} style={{ marginLeft: '1rem' }}>Clear</button>
+      <div className="flex gap-3 pt-2">
+        <button onClick={handleSave} className="button button-primary">Save</button>
+        <button onClick={handleClear} className="button button-danger">Clear</button>
       </div>
     </div>
   );

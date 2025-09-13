@@ -9,6 +9,7 @@ interface EnhancedSignatureControlsProps extends SignatureControlsProps {
   onToggleGrid?: () => void;
   showEraser?: boolean;
   onEraserMode?: () => void;
+  theme?: 'default' | 'tailwind';
 }
 
 const SignatureControls: React.FC<EnhancedSignatureControlsProps> = ({
@@ -32,15 +33,22 @@ const SignatureControls: React.FC<EnhancedSignatureControlsProps> = ({
   showGrid = false,
   onToggleGrid,
   showEraser = false,
-  onEraserMode
+  onEraserMode,
+  theme = 'default'
 }: EnhancedSignatureControlsProps) => {
+  const btnCls = theme === 'tailwind'
+    ? 'sig-pad-toolbar-btn'
+    : 'control-button';
+  const containerCls = theme === 'tailwind'
+    ? 'signature-controls flex flex-wrap gap-2 mb-2'
+    : 'signature-controls';
   return (
-    <div className="signature-controls" role="toolbar" aria-label="Signature controls">
-      <div className="controls-left">
+    <div className={containerCls} role="toolbar" aria-label="Signature controls">
+      <div className="controls-left flex items-center gap-2 flex-wrap">
         <button 
           onClick={onUndo} 
           disabled={!canUndo}
-          className="control-button"
+          className={btnCls}
           title="Undo"
           aria-label="Undo"
         >
@@ -49,7 +57,7 @@ const SignatureControls: React.FC<EnhancedSignatureControlsProps> = ({
         <button 
           onClick={onRedo} 
           disabled={!canRedo}
-          className="control-button"
+          className={btnCls}
           title="Redo"
           aria-label="Redo"
         >
@@ -58,7 +66,7 @@ const SignatureControls: React.FC<EnhancedSignatureControlsProps> = ({
         <select 
           value={currentOptions.drawingMode} 
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => onDrawingModeChange(e.target.value as DrawingMode)}
-          className="control-select"
+          className={theme === 'tailwind' ? 'control-select h-8 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm px-2' : 'control-select'}
           aria-label="Drawing mode"
         >
           <option value="pen">Pen</option>
@@ -70,7 +78,7 @@ const SignatureControls: React.FC<EnhancedSignatureControlsProps> = ({
           type="color" 
           value={currentOptions.penColor} 
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => onPenColorChange(e.target.value)}
-          className="control-color"
+          className={theme === 'tailwind' ? 'control-color h-8 w-10 border border-gray-300 dark:border-gray-600 rounded-md overflow-hidden' : 'control-color'}
           title="Pen Color"
           aria-label="Pen color"
         />
@@ -80,7 +88,7 @@ const SignatureControls: React.FC<EnhancedSignatureControlsProps> = ({
           max="10" 
           value={currentOptions.penWidth} 
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => onPenWidthChange(parseInt(e.target.value))}
-          className="control-slider"
+          className={theme === 'tailwind' ? 'control-slider cursor-pointer accent-brand-600' : 'control-slider'}
           title="Pen Width"
           aria-label="Pen width"
         />
@@ -88,7 +96,7 @@ const SignatureControls: React.FC<EnhancedSignatureControlsProps> = ({
         {onResetPen && (
           <button 
             onClick={onResetPen}
-            className="control-button"
+            className={btnCls}
             title="Reset Pen Settings"
             aria-label="Reset pen settings"
           >
@@ -98,7 +106,7 @@ const SignatureControls: React.FC<EnhancedSignatureControlsProps> = ({
         {showEraser && onEraserMode && (
           <button 
             onClick={onEraserMode}
-            className="control-button"
+            className={btnCls}
             title="Eraser Mode"
             aria-label="Eraser mode"
           >
@@ -108,7 +116,7 @@ const SignatureControls: React.FC<EnhancedSignatureControlsProps> = ({
         {onToggleGrid && (
           <button 
             onClick={onToggleGrid}
-            className="control-button"
+            className={btnCls}
             title={showGrid ? "Hide Grid" : "Show Grid"}
             aria-label={showGrid ? "Hide grid" : "Show grid"}
           >
@@ -116,10 +124,10 @@ const SignatureControls: React.FC<EnhancedSignatureControlsProps> = ({
           </button>
         )}
       </div>
-      <div className="controls-right">
+      <div className="controls-right flex items-center gap-2 flex-wrap">
         <button 
           onClick={onClear} 
-          className="control-button clear-button"
+          className={`${btnCls} clear-button`}
           title={clearText}
           aria-label="Clear signature"
         >
@@ -129,7 +137,7 @@ const SignatureControls: React.FC<EnhancedSignatureControlsProps> = ({
           <button 
             onClick={onSave} 
             disabled={isEmpty}
-            className="control-button save-button"
+            className={`${btnCls} save-button`}
             title={saveText}
             aria-label="Save signature"
           >
@@ -140,7 +148,7 @@ const SignatureControls: React.FC<EnhancedSignatureControlsProps> = ({
           <button 
             onClick={onUpload} 
             disabled={isEmpty}
-            className="control-button upload-button"
+            className={`${btnCls} upload-button`}
             title={uploadText}
             aria-label="Upload signature"
           >
@@ -151,7 +159,7 @@ const SignatureControls: React.FC<EnhancedSignatureControlsProps> = ({
           <button 
             onClick={onDownload}
             disabled={isEmpty}
-            className="control-button"
+            className={btnCls}
             title="Download signature"
             aria-label="Download signature"
           >

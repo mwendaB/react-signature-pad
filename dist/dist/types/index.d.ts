@@ -4,6 +4,4 @@ export { useUndoRedo } from './hooks/useUndoRedo';
 export * from './types';
 export * from './utils/exportUtils';
 export * from './utils/validationUtils';
-import SignaturePad from './components/SignaturePad';
-export default SignaturePad;
 //# sourceMappingURL=index.d.ts.map

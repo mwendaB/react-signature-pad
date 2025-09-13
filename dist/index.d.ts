@@ -35,6 +35,10 @@ interface SignaturePadProps {
     clearText?: string;
     maxWidth?: number;
     maxHeight?: number;
+    /** Visual theme integration. "default" uses library CSS; "tailwind" adds utility classes if consumer has Tailwind configured. */
+    theme?: 'default' | 'tailwind';
+    /** Show built-in dark mode toggle (works with both themes). */
+    showDarkModeToggle?: boolean;
 }
 interface UseSignatureResult {
     isEmpty: boolean;
@@ -112,4 +116,4 @@ declare const getBoundingBox: (points: Point[]) => {
 declare const calculateTotalDistance: (points: Point[]) => number;
 declare const isSignatureEmpty: (dataURL: string) => boolean;
 
-export { DrawingMode, Point, SignatureControlsProps, SignatureCustomizationPanelProps, SignatureOptions, SignaturePad, SignaturePadProps, UseSignatureResult, UseUndoRedoResult, calculateTotalDistance, dataURLToBlob, dataURLToFile, SignaturePad as default, downloadDataURL, getBoundingBox, isSignatureEmpty, uploadDataURL, useSignature, useUndoRedo, validateSignature };
+export { DrawingMode, Point, SignatureControlsProps, SignatureCustomizationPanelProps, SignatureOptions, SignaturePad, SignaturePadProps, UseSignatureResult, UseUndoRedoResult, calculateTotalDistance, dataURLToBlob, dataURLToFile, downloadDataURL, getBoundingBox, isSignatureEmpty, uploadDataURL, useSignature, useUndoRedo, validateSignature };

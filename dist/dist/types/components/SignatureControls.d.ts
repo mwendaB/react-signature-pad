@@ -7,6 +7,7 @@ interface EnhancedSignatureControlsProps extends SignatureControlsProps {
     onToggleGrid?: () => void;
     showEraser?: boolean;
     onEraserMode?: () => void;
+    theme?: 'default' | 'tailwind';
 }
 declare const SignatureControls: React.FC<EnhancedSignatureControlsProps>;
 export default SignatureControls;

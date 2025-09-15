@@ -1,7 +1,7 @@
 import React from 'react';
 import { SignaturePad } from 'react-signature-pad';
 
-// Basic usage example for SignaturePad
+// Basic usage for SignaturePad
 const BasicExample: React.FC = () => {
   return (
     <div className="panel space-y-4">

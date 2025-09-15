@@ -5,39 +5,39 @@
 /* Signature Pad Enhanced Design */
 @layer components {
   /* Enhanced Signature Pad Container with beautiful design */
-.sig-pad-container {
-  @apply relative max-w-full mx-auto p-6 bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 rounded-2xl shadow-2xl shadow-gray-200/50 dark:shadow-gray-900/50 border border-gray-200/60 dark:border-gray-700/60 backdrop-blur-sm transition-all duration-500 hover:shadow-xl hover:scale-[1.02];
-}
+  .sig-pad-container {
+    @apply relative max-w-full mx-auto p-6 bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 rounded-2xl shadow-2xl shadow-gray-200/50 dark:shadow-gray-900/50 border border-gray-200/60 dark:border-gray-700/60 backdrop-blur-sm transition-all duration-500 hover:shadow-xl hover:scale-[1.02];
+  }
 
-/* Dark Mode Toggle */
-.sig-pad-dark-toggle {
-  @apply mb-4 ml-auto flex items-center justify-center p-3 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 backdrop-blur-sm;
-}
+  /* Dark Mode Toggle */
+  .sig-pad-dark-toggle {
+    @apply mb-4 ml-auto flex items-center justify-center p-3 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 backdrop-blur-sm;
+  }
 
-.sig-pad-dark-toggle:hover {
-  @apply from-purple-600 to-blue-700;
-}
+  .sig-pad-dark-toggle:hover {
+    @apply from-purple-600 to-blue-700;
+  }
 
-.dark .sig-pad-dark-toggle {
-  @apply from-yellow-400 to-orange-500 text-gray-900;
-}
+  .dark .sig-pad-dark-toggle {
+    @apply from-yellow-400 to-orange-500 text-gray-900;
+  }
 
-.dark .sig-pad-dark-toggle:hover {
-  @apply from-yellow-500 to-orange-600;
-}
-  
+  .dark .sig-pad-dark-toggle:hover {
+    @apply from-yellow-500 to-orange-600;
+  }
+
   .sig-pad-toolbar-btn {
     @apply inline-flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-600 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-brand-50 hover:border-brand-200 hover:text-brand-700 dark:hover:bg-brand-900/20 dark:hover:border-brand-700 dark:hover:text-brand-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm hover:shadow-md;
   }
-  
+
   .sig-pad-toolbar-btn.primary {
     @apply bg-brand-600 text-white border-brand-600 hover:bg-brand-700 hover:border-brand-700 hover:text-white shadow-brand-200/50 dark:shadow-brand-900/50;
   }
-  
+
   .sig-pad-toolbar-btn.danger {
     @apply bg-red-600 text-white border-red-600 hover:bg-red-700 hover:border-red-700 hover:text-white shadow-red-200/50 dark:shadow-red-900/50;
   }
-  
+
   .sig-pad-canvas-shell {
     @apply relative mt-6 rounded-xl ring-2 ring-gray-100 dark:ring-gray-700 overflow-hidden bg-white dark:bg-gray-800 shadow-inner transition-all duration-300 hover:ring-brand-200 dark:hover:ring-brand-700;
   }
@@ -51,39 +51,39 @@
   .sig-pad-canvas {
     @apply w-full h-full rounded-xl bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all duration-200;
   }
-  
+
   .sig-pad-placeholder {
     @apply absolute inset-0 flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 pointer-events-none select-none;
   }
-  
+
   .sig-pad-placeholder-icon {
     @apply w-12 h-12 mb-3 text-gray-300 dark:text-gray-600 animate-pulse;
   }
-  
+
   .sig-pad-placeholder-text {
     @apply text-base font-medium mb-1;
   }
-  
+
   .sig-pad-placeholder-subtext {
     @apply text-sm text-gray-300 dark:text-gray-600;
   }
-  
+
   .sig-pad-controls-group {
     @apply flex items-center gap-2 p-3 rounded-xl bg-gray-50/50 dark:bg-gray-800/30 backdrop-blur-sm border border-gray-100 dark:border-gray-700;
   }
-  
+
   .sig-pad-color-input {
     @apply h-10 w-12 border-2 border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer;
   }
-  
+
   .sig-pad-range-input {
     @apply cursor-pointer accent-brand-600 bg-gray-100 dark:bg-gray-700 rounded-lg h-2 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-600;
   }
-  
+
   .sig-pad-select {
     @apply h-10 rounded-lg border-2 border-gray-200 dark:border-gray-600 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 text-sm px-3 font-medium transition-all duration-200 hover:border-brand-300 dark:hover:border-brand-600 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500;
   }
-  
+
   .sig-pad-dark-toggle {
     @apply fixed top-4 right-4 z-50 p-2 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110;
   }

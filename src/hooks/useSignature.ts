@@ -20,14 +20,28 @@ export const useSignature = (
     velocityFilterWeight: options.velocityFilterWeight || 0.7,
   });
 
-  // Update options when they change
+  // Update options when they actually change (avoid identity churn causing re-renders)
+  const prevOptionsRef = useRef<Partial<SignatureOptions> | null>(null);
   useEffect(() => {
-    setCurrentOptions(prev => ({
-      ...prev,
-      ...options,
-      width: options.width || prev.width,
-      height: options.height || prev.height,
-    }));
+    const keys: (keyof SignatureOptions)[] = [
+      'width','height','penColor','penWidth','backgroundColor','drawingMode','minWidth','maxWidth','velocityFilterWeight'
+    ];
+    let changed = false;
+    const prev = prevOptionsRef.current || {};
+    for (const k of keys) {
+      if (options[k] !== undefined && options[k] !== prev[k]) {
+        changed = true; break;
+      }
+    }
+    if (changed) {
+      setCurrentOptions(prevState => ({
+        ...prevState,
+        ...options,
+        width: options.width || prevState.width,
+        height: options.height || prevState.height,
+      }));
+      prevOptionsRef.current = options;
+    }
   }, [options]);
 
   // Initialize canvas

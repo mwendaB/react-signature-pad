@@ -2,89 +2,232 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Signature Pad Enhanced Design */
+/* Enhanced Signature Pad Design System */
 @layer components {
-  /* Enhanced Signature Pad Container with beautiful design */
+  /* Brand colors - can be customized by consumers */
+  :root {
+    --brand-50: #eff6ff;
+    --brand-100: #dbeafe;
+    --brand-200: #bfdbfe;
+    --brand-300: #93c5fd;
+    --brand-400: #60a5fa;
+    --brand-500: #3b82f6;
+    --brand-600: #2563eb;
+    --brand-700: #1d4ed8;
+    --brand-800: #1e40af;
+    --brand-900: #1e3a8a;
+  }
+
+  .dark {
+    --brand-50: #1e3a8a;
+    --brand-100: #1e40af;
+    --brand-200: #1d4ed8;
+    --brand-300: #2563eb;
+    --brand-400: #3b82f6;
+    --brand-500: #60a5fa;
+    --brand-600: #93c5fd;
+    --brand-700: #bfdbfe;
+    --brand-800: #dbeafe;
+    --brand-900: #eff6ff;
+  }
+
+  /* Enhanced Signature Pad Container - Mobile First */
+  .signature-pad-enhanced {
+    @apply relative w-full max-w-full;
+  }
+  
   .sig-pad-container {
-    @apply relative max-w-full mx-auto p-6 bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 rounded-2xl shadow-2xl shadow-gray-200/50 dark:shadow-gray-900/50 border border-gray-200/60 dark:border-gray-700/60 backdrop-blur-sm transition-all duration-500 hover:shadow-xl hover:scale-[1.02];
+    @apply relative w-full mx-auto p-4 sm:p-6 bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 rounded-xl sm:rounded-2xl shadow-lg sm:shadow-2xl shadow-gray-200/50 dark:shadow-gray-900/50 border border-gray-200/60 dark:border-gray-700/60 backdrop-blur-sm transition-all duration-500;
   }
 
-  /* Dark Mode Toggle */
-  .sig-pad-dark-toggle {
-    @apply mb-4 ml-auto flex items-center justify-center p-3 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 backdrop-blur-sm;
+  /* Enhanced Button System with Clear Hierarchy */
+  .btn-base {
+    @apply inline-flex items-center justify-center font-medium border rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none;
   }
 
-  .sig-pad-dark-toggle:hover {
-    @apply from-purple-600 to-blue-700;
+  .btn-primary {
+    @apply btn-base bg-blue-600 hover:bg-blue-700 text-white border-blue-600 hover:border-blue-700 shadow-lg shadow-blue-200/50 dark:shadow-blue-900/50 focus:ring-blue-500 hover:scale-[1.02] active:scale-[0.98];
   }
 
-  .dark .sig-pad-dark-toggle {
-    @apply from-yellow-400 to-orange-500 text-gray-900;
+  .btn-secondary {
+    @apply btn-base bg-white hover:bg-gray-50 text-gray-700 border-gray-300 hover:border-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200 dark:border-gray-600 focus:ring-gray-500 hover:shadow-md;
   }
 
-  .dark .sig-pad-dark-toggle:hover {
-    @apply from-yellow-500 to-orange-600;
+  .btn-tertiary {
+    @apply btn-base bg-transparent hover:bg-gray-50 text-gray-600 hover:text-gray-700 border-transparent hover:border-gray-200 dark:hover:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300 focus:ring-gray-500;
   }
 
-  .sig-pad-toolbar-btn {
-    @apply inline-flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-600 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-brand-50 hover:border-brand-200 hover:text-brand-700 dark:hover:bg-brand-900/20 dark:hover:border-brand-700 dark:hover:text-brand-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm hover:shadow-md;
+  .btn-danger {
+    @apply btn-base bg-red-600 hover:bg-red-700 text-white border-red-600 hover:border-red-700 shadow-lg shadow-red-200/50 dark:shadow-red-900/50 focus:ring-red-500 hover:scale-[1.02] active:scale-[0.98];
   }
 
-  .sig-pad-toolbar-btn.primary {
-    @apply bg-brand-600 text-white border-brand-600 hover:bg-brand-700 hover:border-brand-700 hover:text-white shadow-brand-200/50 dark:shadow-brand-900/50;
+  .btn-ghost {
+    @apply btn-base bg-transparent hover:bg-gray-100 text-gray-600 hover:text-gray-700 border-transparent dark:hover:bg-gray-800 dark:text-gray-400 focus:ring-gray-500;
   }
 
-  .sig-pad-toolbar-btn.danger {
-    @apply bg-red-600 text-white border-red-600 hover:bg-red-700 hover:border-red-700 hover:text-white shadow-red-200/50 dark:shadow-red-900/50;
-  }
+  .btn-sm { @apply px-3 py-1.5 text-sm gap-1.5; }
+  .btn-md { @apply px-4 py-2 text-sm gap-2; }
+  .btn-lg { @apply px-6 py-3 text-base gap-2; }
 
-  .sig-pad-canvas-shell {
-    @apply relative mt-6 rounded-xl ring-2 ring-gray-100 dark:ring-gray-700 overflow-hidden bg-white dark:bg-gray-800 shadow-inner transition-all duration-300 hover:ring-brand-200 dark:hover:ring-brand-700;
-  }
-
-  /* Canvas container wrapper */
+  /* Enhanced Canvas Container - Mobile Optimized */
   .sig-pad-canvas-container {
-    @apply relative mt-6 rounded-xl ring-2 ring-gray-100 dark:ring-gray-700 overflow-hidden bg-white dark:bg-gray-800 shadow-inner transition-all duration-300 hover:ring-brand-200 dark:hover:ring-brand-700;
+    @apply relative rounded-lg sm:rounded-xl ring-2 ring-gray-100 dark:ring-gray-700 overflow-hidden bg-white dark:bg-gray-800 shadow-inner transition-all duration-300 hover:ring-blue-200 dark:hover:ring-blue-700 touch-none;
   }
 
-  /* Canvas itself */
   .sig-pad-canvas {
-    @apply w-full h-full rounded-xl bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all duration-200;
+    @apply w-full h-full rounded-lg sm:rounded-xl bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 cursor-crosshair touch-none;
   }
 
+  /* Enhanced Placeholder with Animation */
   .sig-pad-placeholder {
-    @apply absolute inset-0 flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 pointer-events-none select-none;
+    @apply absolute inset-0 flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 pointer-events-none select-none px-4;
   }
 
   .sig-pad-placeholder-icon {
-    @apply w-12 h-12 mb-3 text-gray-300 dark:text-gray-600 animate-pulse;
+    @apply w-8 h-8 sm:w-12 sm:h-12 mb-2 sm:mb-3 text-gray-300 dark:text-gray-600 animate-pulse;
   }
 
   .sig-pad-placeholder-text {
-    @apply text-base font-medium mb-1;
+    @apply text-sm sm:text-base font-medium mb-1 text-center;
   }
 
   .sig-pad-placeholder-subtext {
-    @apply text-sm text-gray-300 dark:text-gray-600;
+    @apply text-xs sm:text-sm text-gray-300 dark:text-gray-600 text-center;
+  }
+
+  /* Toolbar and Control Groups - Mobile First */
+  .sig-pad-toolbar {
+    @apply flex flex-wrap items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gray-50/80 dark:bg-gray-800/30 backdrop-blur-sm border border-gray-200 dark:border-gray-700;
   }
 
   .sig-pad-controls-group {
-    @apply flex items-center gap-2 p-3 rounded-xl bg-gray-50/50 dark:bg-gray-800/30 backdrop-blur-sm border border-gray-100 dark:border-gray-700;
+    @apply flex items-center gap-1.5 sm:gap-2 p-2 sm:p-3 rounded-lg bg-gray-50/50 dark:bg-gray-800/30 backdrop-blur-sm border border-gray-100 dark:border-gray-700;
   }
 
+  .sig-pad-action-bar {
+    @apply flex flex-wrap items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg sm:rounded-xl border bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-gray-200 dark:border-gray-700;
+  }
+
+  /* Enhanced Input Controls - Touch Friendly */
   .sig-pad-color-input {
-    @apply h-10 w-12 border-2 border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer;
+    @apply h-8 w-10 sm:h-10 sm:w-12 border-2 border-gray-200 dark:border-gray-600 rounded-md sm:rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer touch-manipulation;
   }
 
   .sig-pad-range-input {
-    @apply cursor-pointer accent-brand-600 bg-gray-100 dark:bg-gray-700 rounded-lg h-2 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-600;
+    @apply w-full cursor-pointer bg-gray-100 dark:bg-gray-700 rounded-lg h-2 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-600 touch-manipulation;
   }
 
   .sig-pad-select {
-    @apply h-10 rounded-lg border-2 border-gray-200 dark:border-gray-600 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 text-sm px-3 font-medium transition-all duration-200 hover:border-brand-300 dark:hover:border-brand-600 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500;
+    @apply h-8 sm:h-10 rounded-md sm:rounded-lg border-2 border-gray-200 dark:border-gray-600 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 text-xs sm:text-sm px-2 sm:px-3 font-medium transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 touch-manipulation;
   }
 
-  .sig-pad-dark-toggle {
-    @apply fixed top-4 right-4 z-50 p-2 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110;
+  /* Settings Panel - Mobile Optimized */
+  .sig-pad-settings-panel {
+    @apply w-full sm:w-80 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl;
+  }
+
+  /* Mobile Responsive Breakpoints */
+  @media (max-width: 640px) {
+    .sig-pad-container {
+      @apply p-3 rounded-xl;
+    }
+    
+    .sig-pad-toolbar {
+      @apply flex-col items-stretch gap-3;
+    }
+    
+    .sig-pad-action-bar {
+      @apply flex-col gap-3;
+    }
+    
+    .sig-pad-settings-panel {
+      @apply fixed inset-x-4 bottom-4 top-auto max-h-[70vh] overflow-y-auto;
+    }
+    
+    .sig-pad-canvas-container {
+      @apply min-h-[200px];
+    }
+  }
+
+  /* Enhanced Dark Mode Support */
+  .dark .sig-pad-container {
+    @apply shadow-2xl shadow-gray-900/80;
+  }
+
+  .dark .sig-pad-canvas {
+    @apply bg-gray-800;
+  }
+
+  .dark .sig-pad-toolbar {
+    @apply bg-gray-800/50;
+  }
+
+  .dark .sig-pad-action-bar {
+    @apply bg-gray-900/90;
+  }
+
+  /* Loading and Error States */
+  .sig-pad-loading {
+    @apply animate-pulse bg-gray-200 dark:bg-gray-700;
+  }
+
+  .sig-pad-error {
+    @apply bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300;
+  }
+
+  /* Accessibility Enhancements */
+  .sig-pad-focus-visible {
+    @apply focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2;
+  }
+
+  /* Animation Utilities */
+  .animate-draw {
+    animation: draw 0.3s ease-out;
+  }
+
+  @keyframes draw {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.2s ease-out;
+  }
+
+  @keyframes slideUp {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* High Contrast Mode Support */
+  @media (prefers-contrast: high) {
+    .sig-pad-container {
+      @apply border-2 border-black dark:border-white;
+    }
+    
+    .btn-primary {
+      @apply bg-blue-800 border-2 border-blue-900;
+    }
+    
+    .sig-pad-canvas-container {
+      @apply ring-2 ring-black dark:ring-white;
+    }
+  }
+
+  /* Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    .sig-pad-container,
+    .btn-primary,
+    .btn-secondary,
+    .sig-pad-canvas,
+    .sig-pad-color-input {
+      @apply transition-none;
+    }
+    
+    .animate-pulse,
+    .animate-draw,
+    .animate-slide-up {
+      @apply animate-none;
+    }
   }
 }

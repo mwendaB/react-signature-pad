@@ -65,6 +65,52 @@ export interface UseSignatureResult {
   setMaxWidth: (width: number) => void;
   setVelocityFilterWeight: (weight: number) => void;
   currentOptions: SignatureOptions;
+  // Advanced (internal – may be documented via imperative handle)
+  getStrokes?: () => Stroke[];
+  loadStrokes?: (strokes: SerializedStroke[]) => void;
+}
+
+// --- Advanced stroke & history model additions ---
+/** Single raw point captured during drawing along with pressure & time (already defined as Point). */
+export interface StrokePoint extends Point {}
+
+/** A stroke is a sequence of points drawn contiguously with a consistent style snapshot. */
+export interface StrokeStyleSnapshot {
+  penColor: string;
+  penWidth: number;
+  drawingMode: DrawingMode;
+  minWidth: number;
+  maxWidth: number;
+  velocityFilterWeight: number;
+  alpha?: number; // Used for highlighter transparency when exporting to SVG
+}
+
+export interface Stroke {
+  id: string;
+  points: StrokePoint[];
+  style: StrokeStyleSnapshot;
+  startedAt: number;
+  endedAt: number;
+  boundingBox?: { minX: number; minY: number; maxX: number; maxY: number };
+}
+
+/** Serialized stroke payload suitable for persistence (without runtime-only properties). */
+export interface SerializedStroke {
+  id: string;
+  points: Array<Pick<StrokePoint, 'x' | 'y' | 'time' | 'pressure'>>;
+  style: StrokeStyleSnapshot;
+  startedAt: number;
+  endedAt: number;
+}
+
+export interface SignaturePadHandle {
+  clear(): void;
+  undo(): void;
+  redo(): void;
+  toDataURL(type?: string, quality?: number): string;
+  toSVG(): string;
+  getStrokes(): Stroke[];
+  loadStrokes(strokes: SerializedStroke[]): void;
 }
 
 export interface SignatureControlsProps {

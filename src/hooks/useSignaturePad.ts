@@ -70,6 +70,10 @@ export interface UseSignaturePadResult {
     onChange?: (isEmpty: boolean) => void;
     onError?: (error: Error) => void;
   };
+
+  // Advanced stroke persistence (pass-through from useSignature)
+  getStrokes?: () => any[]; // Array<Stroke> but keep loose here to avoid circular import in lite interface
+  loadStrokes?: (strokes: any[]) => void; // Array<SerializedStroke>
 }
 
 export function useSignaturePad(
@@ -326,6 +330,10 @@ export function useSignaturePad(
       hasChanges
     },
     
-    events: callbacks
+    events: callbacks,
+
+    // Advanced stroke APIs (only if underlying hook supplied them)
+    getStrokes: signature.getStrokes,
+    loadStrokes: signature.loadStrokes
   };
 }

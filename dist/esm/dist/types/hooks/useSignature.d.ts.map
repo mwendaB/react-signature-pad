@@ -1,1 +1,1 @@
-{"version":3,"file":"useSignature.d.ts","sourceRoot":"","sources":["../../../src/hooks/useSignature.ts"],"names":[],"mappings":"AACA,OAAO,EAAS,gBAAgB,EAAe,kBAAkB,EAAE,MAAM,UAAU,CAAC;AAGpF,eAAO,MAAM,YAAY,cACZ,MAAM,SAAS,CAAC,iBAAiB,CAAC,WACpC,QAAQ,gBAAgB,CAAC,KACjC,kBA0OF,CAAC"}
+{"version":3,"file":"useSignature.d.ts","sourceRoot":"","sources":["../../../src/hooks/useSignature.ts"],"names":[],"mappings":"AACA,OAAO,EAEL,gBAAgB,EAEhB,kBAAkB,EAKnB,MAAM,UAAU,CAAC;AAIlB,eAAO,MAAM,YAAY,cACZ,MAAM,SAAS,CAAC,iBAAiB,CAAC,WACpC,QAAQ,gBAAgB,CAAC,KACjC,kBA0RF,CAAC"}

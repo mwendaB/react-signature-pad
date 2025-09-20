@@ -8,15 +8,24 @@ import dts from 'rollup-plugin-dts';
 // Common configuration
 const commonConfig = {
   input: 'src/index.ts',
-  external: ['react', 'react-dom'],
+  external: (id) => {
+    return id === 'react' || 
+           id === 'react-dom' || 
+           id === 'react/jsx-runtime' ||
+           id.startsWith('react/');
+  },
   plugins: [
     external(),
-    resolve(),
+    resolve({
+      browser: false,
+      preferBuiltins: false
+    }),
     commonjs(),
     typescript({ 
       tsconfig: './tsconfig.json',
       declaration: true,
-      declarationDir: 'dist/types'
+      declarationDir: 'dist/types',
+      jsx: 'react-jsx' // Use automatic JSX runtime
     }),
   ],
 };
@@ -36,13 +45,13 @@ const esmConfig = {
   ],
 };
 
-// CJS configuration
+// CJS configuration  
 const cjsConfig = {
   ...commonConfig,
   output: {
     file: 'dist/index.js',
     format: 'cjs',
-    exports: 'default',
+    exports: 'named', // Changed to named for consistency
     sourcemap: true,
   },
   plugins: [

@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { SignaturePad } from '../../../src';
-import '../../../dist/tailwind.css';
+import React, { useState, useMemo, useRef } from 'react';
+import { SignaturePad } from 'react-signature-pad';
+// Type imported from library root (re-exported in index)
+import type { SignaturePadHandle } from 'react-signature-pad';
+import 'react-signature-pad/dist/styles/tailwind.css';
 
 export default function Home() {
+  const padRef = useRef<SignaturePadHandle | null>(null);
   const [signature, setSignature] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -56,8 +59,10 @@ export default function Home() {
 
         {/* Signature Pad */}
         <div className="max-w-4xl mx-auto">
+          {/** Memoize options to prevent re-renders triggering deep state updates in hook */}
           <SignaturePad
-            options={{ width: 800, height: 400 }}
+            ref={padRef}
+            options={useMemo(() => ({ width: 800, height: 400 }), [])}
             onSave={handleSave}
             saveText="💾 Save Signature"
             clearText="🗑️ Clear"
@@ -67,6 +72,24 @@ export default function Home() {
             saveButton={true}
             className="mx-auto"
           />
+          <div className="mt-4 flex gap-3 justify-center">
+            <button
+              onClick={() => {
+                const svg = padRef.current?.toSVG();
+                if (!svg) return;
+                const blob = new Blob([svg], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'signature.svg';
+                a.click();
+                URL.revokeObjectURL(url);
+              }}
+              className={`px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 transition`}
+            >
+              Download SVG
+            </button>
+          </div>
         </div>
 
         {/* Saved Signature Display */}

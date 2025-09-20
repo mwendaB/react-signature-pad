@@ -1,1 +1,1 @@
-{"version":3,"file":"SignaturePad.d.ts","sourceRoot":"","sources":["../../../src/components/SignaturePad.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAmD,MAAM,OAAO,CAAC;AAGxE,OAAO,EAAE,iBAAiB,EAAoB,MAAM,UAAU,CAAC;AAI/D,QAAA,MAAM,YAAY,EAAE,KAAK,CAAC,EAAE,CAAC,iBAAiB,CA0Q7C,CAAC;AAEF,eAAe,YAAY,CAAC"}
+{"version":3,"file":"SignaturePad.d.ts","sourceRoot":"","sources":["../../../src/components/SignaturePad.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAkD,MAAM,OAAO,CAAC;AACvE,OAAO,EAAE,iBAAiB,EAAE,kBAAkB,EAAE,MAAM,UAAU,CAAC;AAIjE,QAAA,MAAM,YAAY,8FA+EhB,CAAC;AAEH,eAAe,YAAY,CAAC"}

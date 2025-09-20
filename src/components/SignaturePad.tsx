@@ -1,276 +1,87 @@
-import React, { useRef, useCallback, useEffect, useState } from 'react';
-import { useSignature } from '../hooks/useSignature';
-import { useUndoRedo } from '../hooks/useUndoRedo';
-import { SignaturePadProps, SignatureOptions } from '../types';
-import SignatureControls from './SignatureControls';
-import SignatureCustomizationPanel from './SignatureCustomizationPanel';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import { SignaturePadProps, SignaturePadHandle } from '../types';
+import { EnhancedSignaturePad, EnhancedSignaturePadProps } from './SignaturePad/EnhancedSignaturePad';
 
-const SignaturePad: React.FC<SignaturePadProps> = ({
-  onSave,
-  onUpload,
-  onClear,
-  onChange,
-  options = {},
-  className = '',
-  showControls = true,
-  showCustomization = true,
-  uploadButton = false,
-  uploadText = "Upload Signature",
-  saveButton = true,
-  saveText = "Save Signature",
-  clearButton = true,
-  clearText = "Clear",
-  maxWidth = 800,
-  maxHeight = 300,
-  theme = 'default',
-  showDarkModeToggle = false,
-}) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [showCustomizationPanel, setShowCustomizationPanel] = useState(false);
-  const [customOptions, setCustomOptions] = useState(options);
-  
+// Enhanced version with backward compatibility wrapper
+const SignaturePad = forwardRef<SignaturePadHandle, SignaturePadProps>((props, ref) => {
+  // We will attempt to capture internal imperative functions via a ref to the enhanced component if it exposes them later.
+  const internalRef = useRef<any>(null);
+  useImperativeHandle(ref, () => ({
+    clear: () => internalRef.current?.canvas?.clear?.() || internalRef.current?.clear?.(),
+    undo: () => internalRef.current?.history?.undo?.(),
+    redo: () => internalRef.current?.history?.redo?.(),
+    toDataURL: (type?: string, quality?: number) => internalRef.current?.export?.toDataURL?.(type, quality) || '',
+    toSVG: () => internalRef.current?.export?.exportAsSVG?.() || internalRef.current?.exportAsSVG?.() || '',
+    getStrokes: () => internalRef.current?.getStrokes?.() || [],
+    loadStrokes: (s) => internalRef.current?.loadStrokes?.(s)
+  }), []);
+  // If using new enhanced API pattern, delegate to EnhancedSignaturePad
+  if ('canvas' in props || 'drawing' in props || 'ui' in props || 'actions' in props) {
+  return <EnhancedSignaturePad ref={internalRef} {...props as any} />;
+  }
+
+  // Legacy API support - convert old props to new format
   const {
-    isEmpty,
-    draw,
-    clear,
-    undo,
-    redo,
-    canUndo,
-    canRedo,
-    exportAsImage,
-    exportAsSVG,
-    toDataURL,
-    setDrawingMode,
-    setPenColor,
-    setPenWidth,
-    setBackgroundColor,
-    setMinWidth,
-    setMaxWidth,
-    setVelocityFilterWeight,
-    currentOptions
-  } = useSignature(canvasRef, customOptions);
+    onSave,
+    onUpload,
+    onClear,
+    onChange,
+    options = {},
+    className = '',
+    showControls = true,
+    showCustomization = true,
+    uploadButton = false,
+    uploadText = "Upload Signature",
+    saveButton = true,
+    saveText = "Save Signature",
+    clearButton = true,
+    clearText = "Clear",
+    maxWidth = 800,
+    maxHeight = 300,
+    theme = 'default',
+    showDarkModeToggle = false,
+  } = props;
 
-  const { addState, undo: undoHistory, redo: redoHistory, canUndo: canUndoHistory, canRedo: canRedoHistory } = 
-    useUndoRedo(() => toDataURL('image/png'));
-
-  // Handle undo/redo with history
-  const handleUndo = useCallback(() => {
-    undoHistory();
-  }, [undoHistory]);
-
-  const handleRedo = useCallback(() => {
-    redoHistory();
-  }, [redoHistory]);
-
-  // Add state to history when drawing ends
-  useEffect(() => {
-    if (!isDrawing && !isEmpty) {
-      addState(toDataURL('image/png'));
-    }
-  }, [isDrawing, isEmpty, addState]);
-
-  // Notify parent when signature changes
-  useEffect(() => {
-    onChange?.(isEmpty);
-  }, [isEmpty, onChange]);
-
-  const handleSave = useCallback(() => {
-    const dataUrl = toDataURL('image/png');
-    onSave?.(dataUrl);
-  }, [toDataURL, onSave]);
-
-  const handleUpload = useCallback(() => {
-    const dataUrl = toDataURL('image/png');
-    if (onUpload) {
-      onUpload(dataUrl);
-    } else {
-      // Default upload behavior if no callback provided
-      const link = document.createElement('a');
-      link.download = 'signature.png';
-      link.href = dataUrl;
-      link.click();
-    }
-  }, [toDataURL, onUpload]);
-
-  const handleClear = useCallback(() => {
-  clear();
-  onClear?.();
-  addState(toDataURL('image/png'));
-  }, [clear, onClear, addState]);
-
-  const handleOptionsChange = useCallback((newOptions: Partial<SignatureOptions>) => {
-    setCustomOptions(prev => ({ ...prev, ...newOptions }));
-    
-    // Apply the changes to the signature hook
-    if (newOptions.penColor) setPenColor(newOptions.penColor);
-    if (newOptions.penWidth) setPenWidth(newOptions.penWidth);
-    if (newOptions.backgroundColor) setBackgroundColor(newOptions.backgroundColor);
-    if (newOptions.drawingMode) setDrawingMode(newOptions.drawingMode);
-    if (newOptions.minWidth) setMinWidth(newOptions.minWidth);
-    if (newOptions.maxWidth) setMaxWidth(newOptions.maxWidth);
-    if (newOptions.velocityFilterWeight) setVelocityFilterWeight(newOptions.velocityFilterWeight);
-  }, [setPenColor, setPenWidth, setBackgroundColor, setDrawingMode, setMinWidth, setMaxWidth, setVelocityFilterWeight]);
-
-  // Responsive canvas sizing
-  useEffect(() => {
-    const resizeCanvas = () => {
-      if (canvasRef.current && containerRef.current) {
-        const containerWidth = containerRef.current.clientWidth;
-        const width = Math.min(containerWidth, maxWidth);
-        const height = maxHeight;
-        
-        canvasRef.current.width = width;
-        canvasRef.current.height = height;
-        
-        // Redraw existing signature if any
-        if (!isEmpty) {
-          const dataUrl = toDataURL('image/png');
-          const ctx = canvasRef.current.getContext('2d');
-          if (ctx && dataUrl) {
-            const img = new Image();
-            img.onload = () => {
-              ctx.drawImage(img, 0, 0, width, height);
-            };
-            img.src = dataUrl;
-          }
-        } else {
-          // Clear and redraw background
-          const ctx = canvasRef.current.getContext('2d');
-          if (ctx && customOptions.backgroundColor) {
-            ctx.fillStyle = customOptions.backgroundColor;
-            ctx.fillRect(0, 0, width, height);
-          }
-        }
-      }
-    };
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    
-    return () => {
-      window.removeEventListener('resize', resizeCanvas);
-    };
-  }, [isEmpty, toDataURL, maxWidth, maxHeight, customOptions.backgroundColor]);
-
-  const rootClasses = [
-    'react-signature-pad',
+  // Convert legacy props to new enhanced API format
+  const enhancedProps: EnhancedSignaturePadProps = {
     className,
-    theme === 'tailwind' ? 'sig-pad-container' : ''
-  ].filter(Boolean).join(' ');
+    canvas: {
+      maxWidth,
+      maxHeight
+    },
+    drawing: options,
+    ui: {
+      theme,
+      showToolbar: showControls,
+      showActionBar: showControls,
+      showSettings: showCustomization
+    },
+    actions: {
+      save: {
+        enabled: saveButton,
+        text: saveText,
+        callback: onSave
+      },
+      upload: {
+        enabled: uploadButton,
+        text: uploadText,
+        callback: onUpload
+      },
+      clear: {
+        enabled: clearButton,
+        text: clearText,
+        callback: onClear
+      }
+    },
+    events: {
+      onChange
+    },
+    features: {
+      enableKeyboardShortcuts: true
+    }
+  };
 
-  return (
-    <div 
-      className={rootClasses}
-      ref={containerRef}
-      style={{ maxWidth: `${maxWidth}px`, maxHeight: `${maxHeight + 100}px` }}
-    >
-      {showDarkModeToggle && (
-        <button
-          type="button"
-          onClick={() => document.documentElement.classList.toggle('dark')}
-          className={theme === 'tailwind' ? 'sig-pad-dark-toggle' : 'customize-toggle'}
-          aria-label="Toggle dark mode"
-        >
-          {theme === 'tailwind' ? (
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
-            </svg>
-          ) : (
-            'Dark Mode'
-          )}
-        </button>
-      )}
-      {showCustomization && (
-        <button 
-          className={theme === 'tailwind' ? 'sig-pad-toolbar-btn mb-4' : 'customize-toggle'}
-          onClick={() => setShowCustomizationPanel(!showCustomizationPanel)}
-        >
-          {showCustomizationPanel ? 'Hide Options' : 'Customize'}
-        </button>
-      )}
-      
-      {showCustomizationPanel && (
-        <SignatureCustomizationPanel
-          options={customOptions}
-          onOptionsChange={handleOptionsChange}
-          onClose={() => setShowCustomizationPanel(false)}
-        />
-      )}
-      
-      {showControls && (
-        <SignatureControls
-          onUndo={handleUndo}
-          onRedo={handleRedo}
-          onClear={handleClear}
-          onSave={saveButton ? handleSave : undefined}
-          onUpload={uploadButton ? handleUpload : undefined}
-          onDrawingModeChange={setDrawingMode}
-          onPenColorChange={setPenColor}
-          onPenWidthChange={setPenWidth}
-          canUndo={canUndoHistory}
-          canRedo={canRedoHistory}
-          isEmpty={isEmpty}
-          currentOptions={currentOptions}
-          saveText={saveText}
-          uploadText={uploadText}
-          clearText={clearText}
-          theme={theme}
-        />
-      )}
-      
-  <div className={`signature-canvas-container ${theme === 'tailwind' ? 'sig-pad-canvas-container' : ''}`}>
-        <canvas
-          ref={canvasRef}
-          className={`signature-canvas ${theme === 'tailwind' ? 'sig-pad-canvas' : ''}`}
-          onMouseDown={(e) => {
-            setIsDrawing(true);
-            draw.start(e.nativeEvent);
-          }}
-          onMouseMove={(e) => {
-            if (isDrawing) {
-              draw.move(e.nativeEvent);
-            }
-          }}
-          onMouseUp={() => {
-            setIsDrawing(false);
-            draw.end();
-          }}
-          onMouseLeave={() => {
-            if (isDrawing) {
-              setIsDrawing(false);
-              draw.end();
-            }
-          }}
-          onTouchStart={(e) => {
-            setIsDrawing(true);
-            draw.start(e.nativeEvent);
-            e.preventDefault();
-          }}
-          onTouchMove={(e) => {
-            if (isDrawing) {
-              draw.move(e.nativeEvent);
-              e.preventDefault();
-            }
-          }}
-          onTouchEnd={() => {
-            setIsDrawing(false);
-            draw.end();
-          }}
-          onTouchCancel={() => {
-            setIsDrawing(false);
-            draw.end();
-          }}
-        />
-        {isEmpty && (
-          <div className={`signature-placeholder ${theme === 'tailwind' ? 'text-gray-400 dark:text-gray-500' : ''}`}>
-            Sign here
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
+  return <EnhancedSignaturePad ref={internalRef} {...enhancedProps} />;
+});
 
 export default SignaturePad;
